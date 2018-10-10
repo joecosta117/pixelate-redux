@@ -50,7 +50,7 @@ export default class App extends Component {
         <h1>Pixelate</h1>
         <div>
           <button id="add-row" onClick={this.handleAddRow}>Add a row</button>
-          <select onClick={this.handleChosenColor}>
+          <select onChange={this.handleChosenColor}>
             <option value="red">Red</option>
             <option value="orange">Orange</option>
             <option value="yellow">Yellow</option>
