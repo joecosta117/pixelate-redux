@@ -17,12 +17,12 @@ const initialState = {};
 /* we'll also add the corresponding action creators */
 
 // And we'll revisit this reducer.
-function reducer(state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     default:
       return state;
   }
-}
+};
 
 const store = createStore(reducer, applyMiddleware(loggerMiddleware));
 
