@@ -9,23 +9,36 @@ import loggerMiddleware from 'redux-logger';
 
 // We'll soon revisit the initial state of this application.
 const initialState = {
-  grid: [...Array(20)].map(el => ''),
+  grid: [[...Array(20)].map(el => '')],
+  chosenColor: "blue"
 };
 
 // ACTION TYPES
 /* we'll add some action types soon */
+const ADD_ROW = "ADD_ROW";
+const CHOSEN_COLOR = "CHOSEN_COLOR";
 
 // ACTION CREATORS
 /* we'll also add the corresponding action creators */
+export const addRow = () => ({type: ADD_ROW});
+export const chosenColor = (color) => ({type: CHOSEN_COLOR, color});
 
 // And we'll revisit this reducer.
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_ROW:
+      const numCols = state.grid[0].length
+      const newRow = Array(numCols).fill('')
+      return {...state, grid: [...state.grid, newRow]}
+    case CHOSEN_COLOR:
+      return {...state, chosenColor: action.color}
     default:
       return state;
   }
 };
 
 const store = createStore(reducer, applyMiddleware(loggerMiddleware));
+
+
 
 export default store;

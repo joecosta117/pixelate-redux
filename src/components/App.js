@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import store from '../store';
+import store, { addRow, chosenColor } from '../store';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
+    this.handleAddRow = this.handleAddRow.bind(this)
+    this.handleChosenColor = this.handleChosenColor.bind(this)
   }
 
   componentDidMount() {
@@ -15,15 +17,22 @@ export default class App extends Component {
     this.unsubscribe();
   }
 
+  handleAddRow() {
+    store.dispatch(addRow())
+  }
+
+  handleChosenColor(evt) {
+    store.dispatch(chosenColor(evt.target.value))
+  }
+
   render() {
-    console.log(this.state);
     const { grid } = this.state;
     return (
       <div id="pixelate">
         <h1>Pixelate</h1>
         <div>
-          <button id="add-row">Add a row</button>
-          <select>
+          <button id="add-row" onClick={this.handleAddRow}>Add a row</button>
+          <select onClick={this.handleChosenColor}>
             <option value="red">Red</option>
             <option value="orange">Orange</option>
             <option value="yellow">Yellow</option>
@@ -37,11 +46,15 @@ export default class App extends Component {
           </select>
         </div>
         <table>
-          <tr>
-            {grid.map(row => {
-              return <td />;
-            })}
-          </tr>
+          <tbody>
+          {grid.map((row, rowIndex) =>
+            <tr key={rowIndex}>
+              {row.map((color, cellIndex) =>
+                <td key={cellIndex} className={color}></td>
+                )}
+            </tr>
+            )}
+          </tbody>
         </table>
       </div>
     );
