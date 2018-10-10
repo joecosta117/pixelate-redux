@@ -8,7 +8,9 @@ import { createStore, applyMiddleware } from 'redux';
 import loggerMiddleware from 'redux-logger';
 
 // We'll soon revisit the initial state of this application.
-const initialState = {};
+const initialState = {
+  grid: [...Array(20)].map(el => ''),
+};
 
 // ACTION TYPES
 /* we'll add some action types soon */
