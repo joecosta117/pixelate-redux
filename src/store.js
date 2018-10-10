@@ -10,18 +10,20 @@ import loggerMiddleware from 'redux-logger';
 // We'll soon revisit the initial state of this application.
 const initialState = {
   grid: [[...Array(20)].map(el => '')],
-  chosenColor: "blue"
+  chosenColor: "red"
 };
 
 // ACTION TYPES
 /* we'll add some action types soon */
 const ADD_ROW = "ADD_ROW";
 const CHOSEN_COLOR = "CHOSEN_COLOR";
+const COLORIZE = "COLORIZE";
 
 // ACTION CREATORS
 /* we'll also add the corresponding action creators */
 export const addRow = () => ({type: ADD_ROW});
 export const chosenColor = (color) => ({type: CHOSEN_COLOR, color});
+export const colorize = (row, col) => ({type: COLORIZE, row, col});
 
 // And we'll revisit this reducer.
 const reducer = (state = initialState, action) => {
@@ -32,6 +34,11 @@ const reducer = (state = initialState, action) => {
       return {...state, grid: [...state.grid, newRow]}
     case CHOSEN_COLOR:
       return {...state, chosenColor: action.color}
+    case COLORIZE:
+      const newGrid = [...state.grid]
+      newGrid[action.row] = [...newGrid[action.row]]
+      newGrid[action.row][action.col] = state.chosenColor
+      return {...state, grid: newGrid}
     default:
       return state;
   }

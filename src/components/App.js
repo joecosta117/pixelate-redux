@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import store, { addRow, chosenColor } from '../store';
+import store, { addRow, chosenColor, colorize } from '../store';
 
 export default class App extends Component {
   constructor(props) {
@@ -7,6 +7,7 @@ export default class App extends Component {
     this.state = store.getState();
     this.handleAddRow = this.handleAddRow.bind(this)
     this.handleChosenColor = this.handleChosenColor.bind(this)
+    this.handleColorize = this.handleColorize.bind(this)
   }
 
   componentDidMount() {
@@ -22,7 +23,24 @@ export default class App extends Component {
   }
 
   handleChosenColor(evt) {
+    // evt.preventDefault()
     store.dispatch(chosenColor(evt.target.value))
+  }
+
+  handleColorize(row, col) {
+    // console.log('colorize target: ', evt.target)
+    // const target = evt.target;
+    // if (target.tagName !== 'TD') {
+    //   return;
+    // }
+    // if (target.className === store.getState().chosenColor) {
+    //   target.className = '';
+    //   store.dispatch(colorize(3, 2))
+    // } else {
+    //   target.className = store.getState().chosenColor;
+    // }
+    store.dispatch(colorize(row, col))
+
   }
 
   render() {
@@ -50,7 +68,7 @@ export default class App extends Component {
           {grid.map((row, rowIndex) =>
             <tr key={rowIndex}>
               {row.map((color, cellIndex) =>
-                <td key={cellIndex} className={color}></td>
+                <td key={cellIndex} className={color} onClick={() => this.handleColorize(rowIndex, cellIndex)}></td>
                 )}
             </tr>
             )}
