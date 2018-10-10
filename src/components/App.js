@@ -16,6 +16,8 @@ export default class App extends Component {
   }
 
   render() {
+    console.log(this.state);
+    const { grid } = this.state;
     return (
       <div id="pixelate">
         <h1>Pixelate</h1>
@@ -34,7 +36,13 @@ export default class App extends Component {
             <option value="brown">Brown</option>
           </select>
         </div>
-        <table />
+        <table>
+          <tr>
+            {grid.map(row => {
+              return <td />;
+            })}
+          </tr>
+        </table>
       </div>
     );
   }
